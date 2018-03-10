@@ -25,13 +25,14 @@ public class Menjacnica implements MenjacnicaInterfejs{
 
 	@Override
 	public void dodajKurs(String valuta, GregorianCalendar datum, double prodajni, double srednji, double kupovni) {
-		Kurs k=new Kurs();
-		k.setDatum(datum);
-		k.setKupovni(kupovni);
-		k.setProdajni(prodajni);
-		k.setSrednji(srednji);
-		for (int i = 0; i < valute.size(); i++) {
+
+		for (int i = 0; i < valute.size() ; i++) {
 			if(valuta!=null && valute.get(i).getNaziv().equals(valuta)) {
+				Kurs k=new Kurs();
+				k.setDatum(datum);
+				k.setKupovni(kupovni);
+				k.setProdajni(prodajni);
+				k.setSrednji(srednji);
 				valute.get(i).setKursevi(k);
 				
 			}
@@ -41,15 +42,34 @@ public class Menjacnica implements MenjacnicaInterfejs{
 
 	@Override
 	public void obrisiKurs(String valuta, GregorianCalendar datum) {
-		// TODO Auto-generated method stub
+		for ( int i = 0; i < valute.size(); i++) {
+			if(valuta!=null && valute.get(i).getNaziv().equals(valuta)) {
+				for (int j = 0; j < valute.get(i).getKursevi().size(); j++) {
+					if(valute.get(i).getKursevi().get(j).getDatum().equals(datum)) {
+						valute.get(i).getKursevi().remove(j);
+						
+					}
+				}
+				
+			}
+		}
 		
 	}
 
 	@Override
 	public Kurs vratiKurs(String valuta, GregorianCalendar datum) {
-		// TODO Auto-generated method stub
-		return null;
+		for ( int i = 0; i < valute.size(); i++) {
+			if(valuta!=null && valute.get(i).getNaziv().equals(valuta)) {
+				for (int j = 0; j < valute.get(i).getKursevi().size(); j++) {
+					if(valute.get(i).getKursevi().get(j).getDatum().equals(datum)) {
+					return valute.get(i).getKursevi().get(j); 
+				}
+			}
+		}
 	}
+	
+		throw new RuntimeException("Trazeni kurs ne postoji!");
+}
 
 	
 }
